@@ -1,25 +1,83 @@
-# Nifty 50 Long Only Strategy
+# Nifty 50 Trading Model
 
 ## Overview
 
-This project implements a long-only trading strategy on Nifty 50 historical data.
+This repository contains two separate trading strategy implementations developed for quantitative trading research and signal generation.
 
-The objective is to generate trading signals in the format:
+The project includes:
+
+1. A custom trading model (`trade2.0.ipynb`) built from scratch using technical indicators and backtesting.
+2. A long-only signal generation model (`Strategy.py`) that generates Buy/Hold/Sell signals in the format required for submission.
+
+---
+
+## Project 1: trade2.0.ipynb
+
+### Objective
+
+Build a complete trading model using technical indicators, risk management rules, and backtesting.
+
+### Features
+
+* NIFTY 50 data from Yahoo Finance
+* RSI (14)
+* EMA (50)
+* ATR (Average True Range)
+* Volume Analysis
+* Momentum Analysis
+* Trend Strength Analysis
+
+### Entry Logic
+
+A BUY signal is generated when:
+
+* Price is above EMA50
+* RSI is below 50 (pullback in uptrend)
+* Price starts recovering from the pullback
+
+### Exit Logic
+
+The model exits positions using:
+
+* Profit targets
+* Trailing stops
+* ATR-based risk control
+* Trend weakness detection
+
+### Backtesting
+
+The notebook contains:
+
+* Trade execution simulation
+* Profit/Loss calculation
+* Win-rate calculation
+* Trade logging
+* Performance evaluation
+
+### Visualization
+
+The notebook also generates:
+
+* Price charts
+* EMA overlays
+* Buy/Sell markers
+* Strategy performance plots
+
+---
+
+## Project 2: Strategy.py
+
+### Objective
+
+Generate long-only trading signals on Nifty historical data.
+
+### Signal Format
 
 * 1 = Buy
 * 0 = Hold
 * -1 = Sell
 
-while enforcing the following constraints:
-
-* No short selling
-* No repeated buy signals while already holding a position
-* No sell signal before a corresponding buy signal
-* Only one active position at a time
-
-## Strategy Logic
-
-The strategy uses:
+### Indicators Used
 
 * RSI (14)
 * EMA (20)
@@ -27,51 +85,49 @@ The strategy uses:
 
 ### Buy Conditions
 
-A buy signal is generated when:
-
 * EMA20 > EMA50
 * RSI > 55
-* Current price > Previous price
+* Current Price > Previous Price
 * No active position exists
 
 ### Sell Conditions
 
-A sell signal is generated when:
-
 * EMA20 < EMA50
 * OR RSI < 45
-* An active position exists
+* Active position exists
 
-### Hold
+### Long-Only Constraints
 
-If neither buy nor sell conditions are met:
+The strategy prevents:
 
-* Signal = 0
+* Short selling
+* Multiple buy signals while already invested
+* Multiple sell signals while flat
 
-## Signal Verification
+### Output
 
-The generated signals are validated to ensure:
+The strategy generates:
 
-* No short positions occur
-* No double-buy events occur
-* Position state remains valid throughout the dataset
+* `nifty_signals.csv`
 
-## Output
+which contains the final signal sequence for all timestamps.
 
-The final output is a CSV file containing:
+---
 
-| Date       | Signal     |
-| ---------- | ---------- |
-| YYYY-MM-DD | 1 / 0 / -1 |
+## Repository Files
 
-## Technologies Used
+* `trade2.0.ipynb` – Trading model with backtesting and visualization
+* `Strategy.py` – Long-only signal generation strategy
+* `nifty_signals.csv` – Generated trading signals
+* `Nifty 50 Historical Data (2).csv` – Historical dataset
+* `requirements.txt` – Python dependencies
 
-* Python
-* Pandas
-* NumPy
-* TA (Technical Analysis Library)
+---
 
 ## Author
 
 Adarsh Gautam Jha
+
 IIT Bombay
+
+Electrical Engineering (Dual Degree)
