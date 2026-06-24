@@ -1,4 +1,3 @@
-# Nifty-50-Trading-model
 # Nifty 50 Long Only Strategy
 
 ## Overview
